@@ -20,7 +20,6 @@ with st.expander(label=":clipboard: Objetivo:", expanded=False):
        El objetivo del mapa es mostrar la distribucion delictiva mediante mapas de calor en cada distrito de Trujillo.
     ''')
 
-
 st.sidebar.title(":chart: Estadisticas:")
 
 st.sidebar.info(
@@ -29,7 +28,6 @@ st.sidebar.info(
 st.sidebar.info(
     "Esta informacion fue extraida de [DATACRIM](https://datacrim.inei.gob.pe/panel/mapa) la plataforma del INEI."
 )
-
 
 if st.sidebar.button(label=":cityscape: Trujillo"):
     st.switch_page("pages/info_trujillo.py")
@@ -68,6 +66,13 @@ def img_to_base64(file_path):
         data = file.read()
     return base64.b64encode(data).decode()
 
+assets_dir = "assets"
+if not os.path.isdir(assets_dir):
+    st.error(f"Directory not found: {assets_dir}")
+else:
+    files_in_assets = os.listdir(assets_dir)
+    st.write(f"Files in '{assets_dir}': {files_in_assets}")
+
 feature_groups = {
     "Trujillo": ([-8.11377086088365, -79.0294647216797],"La Ciudad de la Eterna Primavera","https://es.wikipedia.org/wiki/Trujillo_(Per%C3%BA)", "assets/trujillo.jpg", fo.Icon(color="green", icon="city", prefix="fa")),
     "Huanchaco": ([-8.081140480885056, -79.1173553466797],"El lugar de los Caballitos de Totora","https://es.wikipedia.org/wiki/Huanchaco", "assets/huanchaco.jpg", fo.Icon(color="black", icon="city", prefix="fa")),
@@ -81,7 +86,6 @@ feature_groups = {
     "Simbal": ([-7.977793585163323, -78.81351470947267],"El Refugio de las Montañas","https://es.wikipedia.org/wiki/Distrito_de_Simbal", "assets/simbal.jpg", fo.Icon(color="darkred", icon="city", prefix="fa")),
     "Poroto": ([-8.013492029841098, -78.76647949218751],"El Oasis verde","https://es.wikipedia.org/wiki/Distrito_de_Poroto", "assets/poroto.jpg", fo.Icon(color="darkpurple", icon="city", prefix="fa"))
 }
-
 
 for city, (coords, description, additional, img_path, icon) in feature_groups.items():
     try:
@@ -103,7 +107,6 @@ for city, (coords, description, additional, img_path, icon) in feature_groups.it
     '''
     fo.Marker(location=coords, tooltip=city, icon=icon, popup=popup_content).add_to(mloc)
 
-
 heatmap_data = {
     "Trujillo": data_trujillo,
     "Huanchaco": data_huanchaco,
@@ -122,7 +125,6 @@ for city, data in heatmap_data.items():
     fg = fo.FeatureGroup(name=city)
     HeatMap(data, radius=10).add_to(fg)
     fg.add_to(mloc)
-
 
 formatter = "function(num) {return L.Util.formatNum(num, 3) + ' &deg; ';};"
 MousePosition(
@@ -144,9 +146,7 @@ Fullscreen(position="topright", title="Expand me", title_cancel="Exit me", force
 
 MiniMap().add_to(mloc)
 
-
 AntPath(locations=loc, reverse=True, dash_array=[10, 20]).add_to(mloc)
 mloc.fit_bounds(mloc.get_bounds())
-
 
 st_data = st_folium(mloc, width=700, height=500)
