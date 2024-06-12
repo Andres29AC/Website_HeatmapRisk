@@ -1,4 +1,5 @@
 import base64
+import os
 from utils.coordinates import wind_locations as loc
 from utils.heatmaps import data_larco, data_porvenir, data_esperanza, data_florencia, data_laredo, data_poroto, data_milagro, data_huanchaco, data_salaverry, data_moche, data_simbal, data_trujillo
 from folium.plugins import MousePosition, LocateControl, MiniMap, Fullscreen, AntPath, HeatMap
@@ -57,14 +58,15 @@ selectstyle = st.sidebar.selectbox("Selecciona un estilo de mapa", [
     "OpenStreetMap", "OpenStreetMap.Mapnik", "Stadia.Outdoors",
     "Esri.WorldImagery", "Stadia.OSMBright",
 ])
-mloc = fo.Map(location=[-8.0832764, -79.2538991],popup="Mi Ubicacion",zoom_start=10,tiles=selectstyle)
+mloc = fo.Map(location=[-8.0832764, -79.2538991], popup="Mi Ubicacion", zoom_start=10, tiles=selectstyle)
 
 
 def img_to_base64(file_path):
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
     with open(file_path, "rb") as file:
         data = file.read()
     return base64.b64encode(data).decode()
-
 
 feature_groups = {
     "Trujillo": ([-8.11377086088365, -79.0294647216797],"La Ciudad de la Eterna Primavera","https://es.wikipedia.org/wiki/Trujillo_(Per%C3%BA)", "assets/trujillo.jpg", fo.Icon(color="green", icon="city", prefix="fa")),
@@ -81,8 +83,12 @@ feature_groups = {
 }
 
 
-for city, (coords,description,additional, img_path, icon) in feature_groups.items():
-    img_base64 = img_to_base64(img_path)
+for city, (coords, description, additional, img_path, icon) in feature_groups.items():
+    try:
+        img_base64 = img_to_base64(img_path)
+    except FileNotFoundError as e:
+        st.error(f"Error: {e}")
+        continue
     popup_content = f'''
     <div style="width: 200px; height: 270px; overflow: hidden;border-radius: 8px; background-color: white; margin:20px;box-shadow: 0 2 4px rgba(0, 0, 0, 0.2);">
         <img src="data:image/jpeg;base64,{img_base64}" style="width: 100%; height: auto; border-radius: 10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);">
@@ -144,4 +150,3 @@ mloc.fit_bounds(mloc.get_bounds())
 
 
 st_data = st_folium(mloc, width=700, height=500)
-
