@@ -66,7 +66,7 @@ def img_to_base64(file_path):
         data = file.read()
     return base64.b64encode(data).decode()
 
-assets_dir = "assets"
+assets_dir = "static"
 if not os.path.isdir(assets_dir):
     st.error(f"Directory not found: {assets_dir}")
 else:
@@ -74,17 +74,17 @@ else:
     st.write(f"Files in '{assets_dir}': {files_in_assets}")
 
 feature_groups = {
-    "Trujillo": ([-8.11377086088365, -79.0294647216797],"La Ciudad de la Eterna Primavera","https://es.wikipedia.org/wiki/Trujillo_(Per%C3%BA)", "assets/trujillo.jpg", fo.Icon(color="green", icon="city", prefix="fa")),
-    "Huanchaco": ([-8.081140480885056, -79.1173553466797],"El lugar de los Caballitos de Totora","https://es.wikipedia.org/wiki/Huanchaco", "assets/huanchaco.jpg", fo.Icon(color="black", icon="city", prefix="fa")),
-    "Salaverry": ([-8.225577732458298, -78.97556304931642],"El Puerto historico","https://es.wikipedia.org/wiki/Distrito_de_Salaverry#:~:text=Salaverry%20es%20una%20localidad%20de,del%20departamento%20de%20La%20Libertad.", "assets/salaverry.jpg", fo.Icon(color="orange", icon="city", prefix="fa")),
-    "Laredo": ([-8.086612699415404, -78.95934104919435],"La Joya Serena","https://es.wikipedia.org/wiki/Distrito_de_Laredo", "assets/laredo.jpg", fo.Icon(color="blue", icon="city", prefix="fa")),
-    "Moche": ([-8.172226993083338, -79.00955200195314],"La Ciudad de las Piramides","https://es.wikipedia.org/wiki/Distrito_de_Moche", "assets/moche.jpg", fo.Icon(color="purple", icon="city", prefix="fa")),
-    "Victor Larco": ([-8.132386270397017, -79.04474258422853],"El Distrito Jardin","https://es.wikipedia.org/wiki/Distrito_de_V%C3%ADctor_Larco_Herrera", "assets/larco.jpg", fo.Icon(color="gray", icon="city", prefix="fa")),
-    "Florencia de Mora": ([-8.082592193271534, -79.0239715576172],"El Distrito del Comercio","https://es.wikipedia.org/wiki/Distrito_de_Florencia_de_Mora", "assets/florencia.jpg", fo.Icon(color="darkgreen", icon="city", prefix="fa")),
-    "La Esperanza": ([-8.083781884673302, -79.04062271118165],"El Distrito Dormitorio","https://es.wikipedia.org/wiki/Distrito_de_La_Esperanza_(Trujillo)", "assets/esperanza.jpg", fo.Icon(color="cadetblue", icon="city", prefix="fa")),
-    "El Porvenir": ([-8.074604174460923, -78.99307250976562],"El Distrito del Calzado","https://es.wikipedia.org/wiki/Distrito_de_El_Porvenir", "assets/porvenir.jpg", fo.Icon(color="darkblue", icon="city", prefix="fa")),
-    "Simbal": ([-7.977793585163323, -78.81351470947267],"El Refugio de las Montañas","https://es.wikipedia.org/wiki/Distrito_de_Simbal", "assets/simbal.jpg", fo.Icon(color="darkred", icon="city", prefix="fa")),
-    "Poroto": ([-8.013492029841098, -78.76647949218751],"El Oasis verde","https://es.wikipedia.org/wiki/Distrito_de_Poroto", "assets/poroto.jpg", fo.Icon(color="darkpurple", icon="city", prefix="fa"))
+    "Trujillo": ([-8.11377086088365, -79.0294647216797],"La Ciudad de la Eterna Primavera","https://es.wikipedia.org/wiki/Trujillo_(Per%C3%BA)", "static/trujillo.jpg", fo.Icon(color="green", icon="city", prefix="fa")),
+    "Huanchaco": ([-8.081140480885056, -79.1173553466797],"El lugar de los Caballitos de Totora","https://es.wikipedia.org/wiki/Huanchaco", "static/huanchaco.jpg", fo.Icon(color="black", icon="city", prefix="fa")),
+    "Salaverry": ([-8.225577732458298, -78.97556304931642],"El Puerto historico","https://es.wikipedia.org/wiki/Distrito_de_Salaverry#:~:text=Salaverry%20es%20una%20localidad%20de,del%20departamento%20de%20La%20Libertad.", "static/salaverry.jpg", fo.Icon(color="orange", icon="city", prefix="fa")),
+    "Laredo": ([-8.086612699415404, -78.95934104919435],"La Joya Serena","https://es.wikipedia.org/wiki/Distrito_de_Laredo", "static/laredo.jpg", fo.Icon(color="blue", icon="city", prefix="fa")),
+    "Moche": ([-8.172226993083338, -79.00955200195314],"La Ciudad de las Piramides","https://es.wikipedia.org/wiki/Distrito_de_Moche", "static/moche.jpg", fo.Icon(color="purple", icon="city", prefix="fa")),
+    "Victor Larco": ([-8.132386270397017, -79.04474258422853],"El Distrito Jardin","https://es.wikipedia.org/wiki/Distrito_de_V%C3%ADctor_Larco_Herrera", "static/larco.jpg", fo.Icon(color="gray", icon="city", prefix="fa")),
+    "Florencia de Mora": ([-8.082592193271534, -79.0239715576172],"El Distrito del Comercio","https://es.wikipedia.org/wiki/Distrito_de_Florencia_de_Mora", "static/florencia.jpg", fo.Icon(color="darkgreen", icon="city", prefix="fa")),
+    "La Esperanza": ([-8.083781884673302, -79.04062271118165],"El Distrito Dormitorio","https://es.wikipedia.org/wiki/Distrito_de_La_Esperanza_(Trujillo)", "static/esperanza.jpg", fo.Icon(color="cadetblue", icon="city", prefix="fa")),
+    "El Porvenir": ([-8.074604174460923, -78.99307250976562],"El Distrito del Calzado","https://es.wikipedia.org/wiki/Distrito_de_El_Porvenir", "static/porvenir.jpg", fo.Icon(color="darkblue", icon="city", prefix="fa")),
+    "Simbal": ([-7.977793585163323, -78.81351470947267],"El Refugio de las Montañas","https://es.wikipedia.org/wiki/Distrito_de_Simbal", "static/simbal.jpg", fo.Icon(color="darkred", icon="city", prefix="fa")),
+    "Poroto": ([-8.013492029841098, -78.76647949218751],"El Oasis verde","https://es.wikipedia.org/wiki/Distrito_de_Poroto", "static/poroto.jpg", fo.Icon(color="darkpurple", icon="city", prefix="fa"))
 }
 
 for city, (coords, description, additional, img_path, icon) in feature_groups.items():
