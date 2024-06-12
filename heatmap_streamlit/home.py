@@ -71,7 +71,7 @@ if not os.path.isdir(assets_dir):
     st.error(f"Directory not found: {assets_dir}")
 else:
     files_in_assets = os.listdir(assets_dir)
-    st.write(f"Files in '{assets_dir}': {files_in_assets}")
+    #st.write(f"Files in '{assets_dir}': {files_in_assets}")
 
 feature_groups = {
     "Trujillo": ([-8.11377086088365, -79.0294647216797],"La Ciudad de la Eterna Primavera","https://es.wikipedia.org/wiki/Trujillo_(Per%C3%BA)", "static/trujillo.jpg", fo.Icon(color="green", icon="city", prefix="fa")),
